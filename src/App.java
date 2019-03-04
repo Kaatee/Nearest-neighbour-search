@@ -8,10 +8,15 @@ public class App {
         FileManager fileManager = new FileManager();
         ArrayList<Point>  pointsList = fileManager.loadProblemData(fileName);
 
+        ComputeManager computeManager= new ComputeManager(pointsList);
 
-        double [][] distanceArray = ComputeManager.calculateDistanceArray(pointsList);
+        double [][] distanceArray = computeManager.calculateDistanceArray();
 
 
+
+
+        DrawPicture picture = new DrawPicture(pointsList,computeManager.maxXRange(), computeManager.maxYRange());
+        picture.draw();
 
     }
 }
