@@ -1,3 +1,5 @@
+package pl.aem.application;
+
 import java.util.ArrayList;
 
 public class App {
@@ -9,11 +11,10 @@ public class App {
         ArrayList<Point>  pointsList = fileManager.loadProblemData(fileName);
 
         ComputeManager computeManager= new ComputeManager(pointsList);
-
         double [][] distanceArray = computeManager.calculateDistanceArray();
 
-
-
+        RegretHeuristicAlgorithm regretAlgorithm  = new RegretHeuristicAlgorithm(distanceArray,pointsList);
+        regretAlgorithm.makeGroups(5);
 
         DrawPicture picture = new DrawPicture(pointsList,computeManager.maxXRange(), computeManager.maxYRange());
         picture.draw();

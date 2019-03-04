@@ -1,18 +1,16 @@
+package pl.aem.application;
+
 import java.awt.*;
 
 public class Point {
 
     private double xCoordinate;
     private double yCoordinate;
-    private int groupId;
     private Color color;
-
 
     public Point (double x , double y){
         this.xCoordinate=x;
         this.yCoordinate=y;
-        this.color=Color.BLACK;
-
     }
 
     public String toString(){

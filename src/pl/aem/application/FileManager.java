@@ -1,6 +1,6 @@
-import java.awt.desktop.SystemSleepEvent;
+package pl.aem.application;
+
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 
@@ -17,15 +17,11 @@ public class FileManager {
                 Point tmp = new Point(Double.parseDouble(coordinate[0]),Double.parseDouble(coordinate[1]));
                 pointsList.add(tmp);
             }
-
         } catch (Exception ex) {
-
             ex.printStackTrace();
         }
         return pointsList;
     }
-
-
 }
 
 
