@@ -13,7 +13,7 @@ public class App {
         ComputeManager computeManager= new ComputeManager(pointsList);
         double [][] distanceArray = computeManager.calculateDistanceArray();
 
-        RegretHeuristicAlgorithm regretAlgorithm  = new RegretHeuristicAlgorithm(distanceArray,pointsList);
+        IAlgorithm regretAlgorithm  = new RegretHeuristicAlgorithm(distanceArray,pointsList);
         regretAlgorithm.makeGroups(5);
 
         DrawPicture picture = new DrawPicture(pointsList,computeManager.maxXRange(), computeManager.maxYRange());
