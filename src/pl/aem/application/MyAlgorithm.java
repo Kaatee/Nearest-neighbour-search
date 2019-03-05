@@ -87,10 +87,6 @@ public class MyAlgorithm implements IAlgorithm {
 
         int z=0;
 
-
-
-        Collections.shuffle(pointsList);
-
         //dla każdego punktu szukam mu grupy, po dodaniu do której będzie dodawał do jej drzewa rozpinającego minimelną wartość
         for(Point p: pointsList){
             z++;
@@ -117,9 +113,12 @@ public class MyAlgorithm implements IAlgorithm {
             listOfGroup.get(minGroupIdx).setMstLen(listOfGroup.get(minGroupIdx).getMstLen()+minDiffer);
         }
 
-        for(Group g : listOfGroup){
-            g.setColorPoints();
+        double mstLen = 0.0;
+        for(Group x : listOfGroup){
+            x.setColorPoints();
+            mstLen+=x.getMstLen();
         }
+        System.out.println("MST: "+mstLen);
     }
 
 

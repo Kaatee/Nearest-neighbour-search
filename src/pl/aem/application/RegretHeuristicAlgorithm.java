@@ -76,27 +76,85 @@ public class RegretHeuristicAlgorithm implements IAlgorithm {
         }
     }
 
+    /**
+     * @param numberOfGroups
+     * initialize groups based on distance between points
+     */
+    private void makeGroupsWithMaxDistance(int numberOfGroups){
+        //initialize first group
+        int idxStartVertex = new Random().nextInt(pointsList.size());
+        Group firstGroup = new Group(colors[0]);
+        firstGroup.addPoint(pointsList.get(idxStartVertex));
+        listOfGroup.add(firstGroup);
+
+        ArrayList<Integer> choosenPointsIndexes = new ArrayList<>();
+        choosenPointsIndexes.add(idxStartVertex);
+
+        double[] sum = new double[distanceArray.length];
+
+        for(int i=1;i<numberOfGroups; i++){ //iteruje tak, żeby stworzyć podaną ilosc grup
+            int idx; //indeks punktu do dodania do danej grupy
+            for(int x=0; x<choosenPointsIndexes.size(); x++){  //iteruje po wszystkich punktach, ktore juz wybralam jako startowe
+                for(int j=0; j<distanceArray.length; j++){ //iteruje po wszystkich kol macierzy odleglosci w wierszach z punktami, ktor dodalam
+                    if(!choosenPointsIndexes.contains(j))//do sumy konkretnej kolumny dodaje wartosc z danego wiersza
+                        sum[j] = distanceArray[choosenPointsIndexes.get(x)][j]; //[wiersz z dodanym punktem][kolumna]
+                }
+            }
+            idx = findMaxValueIdx(sum); //znajduje indeks (czyli nr punktu), ktory ma najwieksza sume odleglosci
+            choosenPointsIndexes.add(idx); //do indeksow wybranych punktow dodaje nowy
+
+            for(int z=0;z<sum.length;z++) //zerowanie tablicy sum
+                sum[z] = 0;
+
+            Group group = new Group(colors[i]);
+            group.addPoint(pointsList.get(idx));
+            listOfGroup.add(group);
+        }
+        System.out.println("Wybralem punkty poczatkowe");
+    }
+
+    /**
+     * @param sum
+     * @return index od max Value in array
+     */
+    private int findMaxValueIdx(double[] sum){
+        int idx = 0;
+        double maxValue = Double.MIN_VALUE;
+        for(int i=0;i<sum.length;i++){
+            if(sum[i]>maxValue){
+                idx = i;
+                maxValue = sum[i];
+            }
+        }
+        return idx;
+    }
+
     @Override
     public void splitIntoGroups(int numberOfGroups) {
-        int addedPoint = 0;
+        int addedPoint = 0; //variable which allow to stop alghoritm in proper moment
+
         //makeGroups(10);
         makeGroupsStaticly(10);
+        //makeGroupsWithMaxDistance(10);
 
+        //color points
         for(Group g : listOfGroup){
             g.setColorPoints();
         }
-        //DLA TESTOW
+
+        //FOR TESTS
         DrawPicture picture = new DrawPicture(pointsList,255.0, 255.0);
         picture.draw("pomocniczy.png");
 
         ArrayList<Point> pointsToAdd = new ArrayList(pointsList);
+
         //dla każdego grupy szukam pokolei punktow ktore moge do niej dodac
-        while(addedPoint < pointsList.size()-1) {
-            for (int g=0; g<listOfGroup.size();g++) {
-                int minPointIdx = 0;
-                double minDiffer = Double.MAX_VALUE;
-                ArrayList<Point> pointsL = new ArrayList<>(listOfGroup.get(g).getPointsInGroup());
-                double currentLength = listOfGroup.get(g).getMstLen();
+        while(addedPoint < pointsList.size()-1) { //execute until amount of points added into group is equal to number of all points
+            for (int g=0; g<listOfGroup.size();g++) { //iterate by groups
+                int minPointIdx = 0; //index of point that currently have the best mst lendth to add
+                double minDiffer = Double.MAX_VALUE; //value of above len
+                ArrayList<Point> pointsL = new ArrayList<>(listOfGroup.get(g).getPointsInGroup()); //points in group which currently tested point added
+                double currentLength = listOfGroup.get(g).getMstLen(); //mst len after adding point
 
                 for (int i = 0; i < pointsToAdd.size(); i++) {
                     pointsL.add(pointsToAdd.get(i));
@@ -120,9 +178,12 @@ public class RegretHeuristicAlgorithm implements IAlgorithm {
             }
         }
 
+        double mstLen = 0.0;
         for(Group x : listOfGroup){
             x.setColorPoints();
+            mstLen+=x.getMstLen();
         }
+        System.out.println("MST: "+mstLen);
 
     }
 
