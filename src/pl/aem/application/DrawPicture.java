@@ -33,7 +33,7 @@ public class DrawPicture {
     }
 
 
-    public void draw() {
+    public void draw(String fileName) {
         final BufferedImage image = new BufferedImage(maxX+5, maxY+5, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D graphics2D = image.createGraphics();
         graphics2D.setPaint(Color.WHITE);
@@ -42,12 +42,13 @@ public class DrawPicture {
         for (Point p : pointList){
             graphics2D.setPaint(p.getColor());
             Ellipse2D.Double circle = new Ellipse2D.Double((int)p.getxCoordinate(), (int)p.getyCoordinate(), 3, 3);
+            //System.out.println("Narysowalem" + p.getColor());
             graphics2D.fill(circle);
         }
         graphics2D.dispose();
         try {
             //ImageIO.write(image, "png", new File("resultNORESCALE.png"));
-            ImageIO.write(resizeImage(image,2000,2000), "png", new File("result.png"));
+            ImageIO.write(resizeImage(image,2000,2000), "png", new File(fileName));
         } catch (IOException ex) {
             ex.printStackTrace();
         }

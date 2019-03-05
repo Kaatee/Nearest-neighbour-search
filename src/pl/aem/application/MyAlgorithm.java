@@ -1,17 +1,16 @@
 package pl.aem.application;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Random;
 
-public class RegretHeuristicAlgorithm implements IAlgorithm {
+public class MyAlgorithm implements IAlgorithm {
 
     private double[][] distanceArray ;
     private ArrayList<Point> pointsList ;
     private ArrayList<Group> listOfGroup;
 
-    public RegretHeuristicAlgorithm(double [][] distanceArray, ArrayList<Point> list){
+    public MyAlgorithm(double [][] distanceArray, ArrayList<Point> list){
         this.distanceArray=distanceArray;
         this.pointsList=list;
         this.listOfGroup=new ArrayList<>();
@@ -50,15 +49,13 @@ public class RegretHeuristicAlgorithm implements IAlgorithm {
             tmpGroup.addPoint(tmpPoint);
             listOfGroup.add(tmpGroup);
         }
-
-
     }
+
+
 
     private void makeGroupsRandomly(int numberOfGroups){
         for(int i=0;i<10;i++) {
-            //start vertex
             int idxStartVertex = new Random().nextInt(pointsList.size());
-            //first group
             Group firstGroup = new Group(colors[i]);
             firstGroup.addPoint(pointsList.get(idxStartVertex));
             listOfGroup.add(firstGroup);
@@ -67,18 +64,17 @@ public class RegretHeuristicAlgorithm implements IAlgorithm {
 
     private void makeGroupsStaticly(int numberOfGroups){
         for(int i=0;i<10;i++) {
-            //start vertex
             int idxStartVertex = i*20;
-            //first group
             Group firstGroup = new Group(colors[i]);
             firstGroup.addPoint(pointsList.get(idxStartVertex));
             listOfGroup.add(firstGroup);
         }
     }
 
+
     @Override
     public void splitIntoGroups(int numberOfGroups) {
-        int addedPoint = 0;
+
         //makeGroups(10);
         makeGroupsStaticly(10);
 
@@ -89,41 +85,43 @@ public class RegretHeuristicAlgorithm implements IAlgorithm {
         DrawPicture picture = new DrawPicture(pointsList,255.0, 255.0);
         picture.draw("pomocniczy.png");
 
-        ArrayList<Point> pointsToAdd = new ArrayList(pointsList);
-        //dla każdego grupy szukam pokolei punktow ktore moge do niej dodac
-        while(addedPoint < pointsList.size()-1) {
-            for (int g=0; g<listOfGroup.size();g++) {
-                int minPointIdx = 0;
-                double minDiffer = Double.MAX_VALUE;
-                ArrayList<Point> pointsL = new ArrayList<>(listOfGroup.get(g).getPointsInGroup());
-                double currentLength = listOfGroup.get(g).getMstLen();
+        int z=0;
 
-                for (int i = 0; i < pointsToAdd.size(); i++) {
-                    pointsL.add(pointsToAdd.get(i));
-                    MSTFinder newMST = new MSTFinder(pointsL);
 
-                    double newLength = newMST.findMSTlength();
-                    double diff = newLength - currentLength;
 
-                    if (diff < minDiffer) {
-                        minDiffer = diff;
-                        minPointIdx = i;
-                    }
+        Collections.shuffle(pointsList);
+
+        //dla każdego punktu szukam mu grupy, po dodaniu do której będzie dodawał do jej drzewa rozpinającego minimelną wartość
+        for(Point p: pointsList){
+            z++;
+            int minGroupIdx =0;
+            double minDiffer = Double.MAX_VALUE;
+
+            for(int i=0;i<listOfGroup.size();i++){
+                double currentLength = listOfGroup.get(i).getMstLen();
+
+                ArrayList<Point> pointsL = new ArrayList<>(listOfGroup.get(i).getPointsInGroup());
+                pointsL.add(p);
+                MSTFinder newMST = new MSTFinder(pointsL);
+                double newLength = newMST.findMSTlength();
+
+                double diff = newLength - currentLength;
+                if(diff < minDiffer){
+                    minDiffer = diff;
+                    minGroupIdx = i;
                 }
-
-                //System.out.println("Dodalem punkt: " + addedPoint + " do grupy: " + listOfGroup.get(g).getGroupColor());
-                listOfGroup.get(g).addPoint(pointsToAdd.get(minPointIdx));
-                listOfGroup.get(g).setMstLen(listOfGroup.get(g).getMstLen() + minDiffer);
-                addedPoint++;
-                pointsToAdd.remove(pointsToAdd.get(minPointIdx));
-                if(addedPoint>pointsList.size()) break;
             }
+
+            //System.out.println("Dodalem punkt: " + z + " do grupy: "+minGroupIdx);
+            listOfGroup.get(minGroupIdx).addPoint(p);
+            listOfGroup.get(minGroupIdx).setMstLen(listOfGroup.get(minGroupIdx).getMstLen()+minDiffer);
         }
 
-        for(Group x : listOfGroup){
-            x.setColorPoints();
+        for(Group g : listOfGroup){
+            g.setColorPoints();
         }
-
     }
+
+
 
 }

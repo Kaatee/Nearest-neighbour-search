@@ -7,10 +7,12 @@ public class Group {
 
     private ArrayList<Point> pointsInGroup;
     private Color groupColor;
+    private Double mstLen;
 
     public Group(Color color){
         this.pointsInGroup= new ArrayList<>();
         this.groupColor=color;
+        this.mstLen = 0.0;
     }
 
     public ArrayList<Point> getPointsInGroup() {
@@ -19,6 +21,14 @@ public class Group {
 
     public void setPointsInGroup(ArrayList<Point> pointsInGroup) {
         this.pointsInGroup = pointsInGroup;
+    }
+
+    public void setMstLen(double len) {
+        this.mstLen = len;
+    }
+
+    public double getMstLen() {
+        return mstLen;
     }
 
     public Color getGroupColor() {
