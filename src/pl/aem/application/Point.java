@@ -11,6 +11,7 @@ public class Point {
     public Point (double x , double y){
         this.xCoordinate=x;
         this.yCoordinate=y;
+        this.color=Color.WHITE;
     }
 
     public String toString(){

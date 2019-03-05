@@ -14,7 +14,7 @@ public class App {
         double [][] distanceArray = computeManager.calculateDistanceArray();
 
         IAlgorithm regretAlgorithm  = new RegretHeuristicAlgorithm(distanceArray,pointsList);
-        regretAlgorithm.makeGroups(5);
+        regretAlgorithm.splitIntoGroups(10);
 
         DrawPicture picture = new DrawPicture(pointsList,computeManager.maxXRange(), computeManager.maxYRange());
         picture.draw();

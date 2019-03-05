@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,6 +21,18 @@ public class DrawPicture {
     }
 
 
+    private BufferedImage resizeImage(BufferedImage img, int newW, int newH) {
+        Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        return dimg;
+    }
+
+
     public void draw() {
         final BufferedImage image = new BufferedImage(maxX+5, maxY+5, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D graphics2D = image.createGraphics();
@@ -33,7 +46,8 @@ public class DrawPicture {
         }
         graphics2D.dispose();
         try {
-            ImageIO.write(image, "png", new File("result.png"));
+            //ImageIO.write(image, "png", new File("resultNORESCALE.png"));
+            ImageIO.write(resizeImage(image,2000,2000), "png", new File("result.png"));
         } catch (IOException ex) {
             ex.printStackTrace();
         }
