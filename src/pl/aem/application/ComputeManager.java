@@ -7,9 +7,12 @@ import java.util.Comparator;
 public class ComputeManager {
     private ArrayList<Point> pointsList;
 
+
     public ComputeManager(ArrayList<Point> list ){
         this.pointsList=list;
+
     }
+
 
     public  double[][] calculateDistanceArray() {
         double[][] distanceArray = new double[pointsList.size()][pointsList.size()];
