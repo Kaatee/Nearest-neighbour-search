@@ -2,10 +2,10 @@ package pl.aem.application;
 
 import java.util.ArrayList;
 
-public class PointOrientedAlgorithm extends Algorithm {
+public class CenterOrientedAlgorithm extends Algorithm {
 
 
-    public PointOrientedAlgorithm( ArrayList<Point> list){
+    public CenterOrientedAlgorithm( ArrayList<Point> list){
         this.pointsList = list;
         this.computeManager=new ComputeManager(pointsList);
         this.distanceArray = computeManager.calculateDistanceArray();
@@ -23,36 +23,33 @@ public class PointOrientedAlgorithm extends Algorithm {
         paintGroups();
         //picture.draw("AfterGroupInitPointOriented.png");
 
+        for (Group g : listOfGroup){
+            g.calculateCurrentCenter();
+        }
+
         for(Point p: pointsList){
 
             int minGroupIdx =0;
             double minDiffer = Double.MAX_VALUE;
 
             for(int i=0;i<listOfGroup.size();i++){
-                double currentLength = listOfGroup.get(i).getMstLen();
+                double distanceToGroup=Math.sqrt(Math.pow((p.getxCoordinate() - listOfGroup.get(i).getCenterX()), 2) + Math.pow((p.getyCoordinate() -listOfGroup.get(i).getCenterY()), 2));
 
-                ArrayList<Point> pointsL = new ArrayList<>(listOfGroup.get(i).getPointsInGroup());
-                pointsL.add(p);
-                newMST = new MSTFinder(pointsL);
-                double newLength = newMST.findMSTlength();
-
-                double dif = newLength - currentLength;
-                if(dif < minDiffer){
-                    minDiffer = dif;
+                if(distanceToGroup < minDiffer){
+                    minDiffer = distanceToGroup;
                     minGroupIdx = i;
                 }
             }
 
             listOfGroup.get(minGroupIdx).addPoint(p);
-            listOfGroup.get(minGroupIdx).setMstLen(listOfGroup.get(minGroupIdx).getMstLen()+minDiffer);
+            listOfGroup.get(minGroupIdx).calculateCurrentCenter();
+            listOfGroup.get(minGroupIdx).setMstLen( new MSTFinder(listOfGroup.get(minGroupIdx).getPointsInGroup()).findMSTlength());
         }
 
-
         totalMSTValue=calculateMST();
-        System.out.println("Point: " + totalMSTValue);
+        System.out.println("Center: " + totalMSTValue);
         paintGroups();
-        picture.draw("Results/ResultPointOriented"+iteration+".png");
+        picture.draw("Results/ResultCenterOriented"+iteration+".png");
     }
-
 
 }

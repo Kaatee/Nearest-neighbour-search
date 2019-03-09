@@ -14,6 +14,7 @@ public class ComputeManager {
     }
 
 
+
     public  double[][] calculateDistanceArray() {
         double[][] distanceArray = new double[pointsList.size()][pointsList.size()];
 

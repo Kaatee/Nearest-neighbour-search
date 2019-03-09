@@ -18,14 +18,16 @@ public class App {
         ArrayList<Double> historyOfMST =new ArrayList<>();
 
 
-        for (int i=0;i<10;i++) {
-//            Algorithm pointOriented = new PointOrientedAlgorithm(pointsList);
-//            pointOriented.splitIntoGroups(10,i);
-//            historyOfMST.add(pointOriented.getTotalMSTvalue());
+        for (int i=0;i<Constants.NUMBER_OF_ITERATIONS;i++) {
+            Algorithm pointOriented = new PointOrientedAlgorithm(pointsList);
+            pointOriented.splitIntoGroups(Constants.NUMBER_OF_GROUPS,i);
+            historyOfMST.add(pointOriented.getTotalMSTvalue());
 
-            Algorithm groupOriented  = new GroupOrientedAlgorithm(pointsList);
-            groupOriented.splitIntoGroups(10,i);
-            historyOfMST.add(groupOriented .getTotalMSTvalue());
+
+            Algorithm centerOriented  = new CenterOrientedAlgorithm(pointsList);
+            centerOriented.splitIntoGroups(10,i);
+            historyOfMST.add(centerOriented.getTotalMSTvalue());
+
         }
 
         System.out.println("\nMax: " +Collections.max(historyOfMST));

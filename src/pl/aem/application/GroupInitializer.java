@@ -67,7 +67,7 @@ public class GroupInitializer {
             }
             choosen.add(idxStartVertex);
             //first group
-            Group firstGroup = new Group(Constants.colors[i]);
+            Group firstGroup = new Group(Constants.COLORS[i]);
             firstGroup.addPoint(pointsList.get(idxStartVertex));
             listOfGroup.add(firstGroup);
         }
@@ -79,7 +79,7 @@ public class GroupInitializer {
             //start vertex
             int idxStartVertex = i*20;
             //first group
-            Group firstGroup = new Group(Constants.colors[i]);
+            Group firstGroup = new Group(Constants.COLORS[i]);
             firstGroup.addPoint(pointsList.get(idxStartVertex));
             listOfGroup.add(firstGroup);
         }
@@ -90,7 +90,7 @@ public class GroupInitializer {
     public ArrayList<Group> makeGroupsWithMaxDistance(int numberOfGroups){
 
         int idxStartVertex = new Random().nextInt(pointsList.size());
-        Group firstGroup = new Group(Constants.colors[0]);
+        Group firstGroup = new Group(Constants.COLORS[0]);
         firstGroup.addPoint(pointsList.get(idxStartVertex));
         listOfGroup.add(firstGroup);
 
@@ -113,7 +113,7 @@ public class GroupInitializer {
             for(int z=0;z<sum.length;z++)
                 sum[z] = 0;
 
-            Group group = new Group(Constants.colors[i]);
+            Group group = new Group(Constants.COLORS[i]);
             group.addPoint(pointsList.get(idx));
             listOfGroup.add(group);
         }

@@ -8,11 +8,15 @@ public class Group {
     private ArrayList<Point> pointsInGroup;
     private Color groupColor;
     private Double mstLen;
+    private Double centerX;
+    private Double centerY;
 
     public Group(Color color){
         this.pointsInGroup= new ArrayList<>();
         this.groupColor=color;
         this.mstLen = 0.0;
+        this.centerX=0.0;
+        this.centerY=0.0;
     }
 
     public ArrayList<Point> getPointsInGroup() {
@@ -44,4 +48,34 @@ public class Group {
             p.setColor(groupColor);
         }
     }
+
+    public Double getCenterX() {
+        return centerX;
+    }
+
+    public void setCenterX(Double center) {
+        this.centerX = center;
+    }
+
+
+    public Double getCenterY() {
+        return centerY;
+    }
+
+    public void setCenterY(Double centerY) {
+        this.centerY = centerY;
+    }
+
+    public void calculateCurrentCenter(){
+        double sumX=0.0;
+        double sumY=0.0;
+        for(Point p :pointsInGroup){
+            sumX+=p.getxCoordinate();
+            sumY+=p.getyCoordinate();
+        }
+
+        this.centerX=sumX/pointsInGroup.size();
+        this.centerY=sumY/pointsInGroup.size();
+    }
+
 }
