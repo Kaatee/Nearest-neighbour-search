@@ -41,7 +41,7 @@ public class MSTFinder {
         marked[0]=true;
 
         int i=pointsList.size();
-        while(i>0){
+        while(i>1){
             i--;
             findNearestPointIdx();
         }
