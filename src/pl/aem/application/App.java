@@ -23,12 +23,15 @@ public class App {
             pointOriented.splitIntoGroups(Constants.NUMBER_OF_GROUPS,i);
             historyOfMST.add(pointOriented.getTotalMSTvalue());
 
-
-
             Algorithm centerOriented  = new CenterOrientedAlgorithm(pointsList);
-            centerOriented.splitIntoGroups(10,i);
+            centerOriented.splitIntoGroups(Constants.NUMBER_OF_GROUPS,i);
             historyOfMST.add(centerOriented.getTotalMSTvalue());
 
+            Algorithm regret  = new RegretAlgorithm(pointsList);
+            regret.splitIntoGroups(Constants.NUMBER_OF_GROUPS,i);
+            historyOfMST.add(regret.getTotalMSTvalue());
+
+            System.out.println();
         }
 
         System.out.println("\nMax: " +Collections.max(historyOfMST));
