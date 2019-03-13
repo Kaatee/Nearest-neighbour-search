@@ -49,9 +49,16 @@ public class RegretAlgorithm extends Algorithm {
                 double currentSum=0.0;
                for (Group g : listOfGroup){
                    if(p.getColor().equals(Color.WHITE)){
-                       double distanceToGroup = Math.sqrt(Math.pow((p.getxCoordinate() - g.getCenterX()), 2) + Math.pow((p.getyCoordinate() - g.getCenterY()), 2));
-                       regretArray[pointsList.indexOf(p)][listOfGroup.indexOf(g)] = distanceToGroup;
-                       currentSum+=distanceToGroup;
+
+                       double currentLength = g.getMstLen();
+                       ArrayList<Point> pointsL = new ArrayList<>(g.getPointsInGroup());
+                       pointsL.add(p);
+                       newMST = new MSTFinder(pointsL);
+                       double newLength = newMST.findMSTlength();
+                       double dif = newLength - currentLength;
+
+                       regretArray[pointsList.indexOf(p)][listOfGroup.indexOf(g)] = dif;
+                       currentSum+=dif;
                    }
                }
                rowSumOfPoints[pointsList.indexOf(p)]=currentSum;
