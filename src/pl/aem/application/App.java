@@ -24,6 +24,7 @@ public class App {
             historyOfMST.add(pointOriented.getTotalMSTvalue());
 
 
+
             Algorithm centerOriented  = new CenterOrientedAlgorithm(pointsList);
             centerOriented.splitIntoGroups(10,i);
             historyOfMST.add(centerOriented.getTotalMSTvalue());

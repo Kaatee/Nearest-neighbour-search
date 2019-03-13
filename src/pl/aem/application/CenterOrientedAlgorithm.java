@@ -1,12 +1,17 @@
 package pl.aem.application;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class CenterOrientedAlgorithm extends Algorithm {
 
 
     public CenterOrientedAlgorithm( ArrayList<Point> list){
-        this.pointsList = list;
+        this.pointsList=new ArrayList<>();
+        for(Point p : list){
+            pointsList.add(new Point(p.getxCoordinate(),p.getyCoordinate()));
+        }
         this.computeManager=new ComputeManager(pointsList);
         this.distanceArray = computeManager.calculateDistanceArray();
         this.listOfGroup = new ArrayList<>();
@@ -19,6 +24,7 @@ public class CenterOrientedAlgorithm extends Algorithm {
     public void splitIntoGroups(int numberOfGroups,int iteration) {
 
 
+
         listOfGroup=groupInit.makeGroupsRandomly(10);
         paintGroups();
         //picture.draw("AfterGroupInitPointOriented.png");
@@ -28,22 +34,24 @@ public class CenterOrientedAlgorithm extends Algorithm {
         }
 
         for(Point p: pointsList){
+            if(p.getColor().equals(Color.WHITE)) {
+                // System.out.println(p.getColor());
+                int minGroupIdx = 0;
+                double minDiffer = Double.MAX_VALUE;
 
-            int minGroupIdx =0;
-            double minDiffer = Double.MAX_VALUE;
+                for (int i = 0; i < listOfGroup.size(); i++) {
+                    double distanceToGroup = Math.sqrt(Math.pow((p.getxCoordinate() - listOfGroup.get(i).getCenterX()), 2) + Math.pow((p.getyCoordinate() - listOfGroup.get(i).getCenterY()), 2));
 
-            for(int i=0;i<listOfGroup.size();i++){
-                double distanceToGroup=Math.sqrt(Math.pow((p.getxCoordinate() - listOfGroup.get(i).getCenterX()), 2) + Math.pow((p.getyCoordinate() -listOfGroup.get(i).getCenterY()), 2));
-
-                if(distanceToGroup < minDiffer){
-                    minDiffer = distanceToGroup;
-                    minGroupIdx = i;
+                    if (distanceToGroup < minDiffer) {
+                        minDiffer = distanceToGroup;
+                        minGroupIdx = i;
+                    }
                 }
-            }
 
-            listOfGroup.get(minGroupIdx).addPoint(p);
-            listOfGroup.get(minGroupIdx).calculateCurrentCenter();
-            listOfGroup.get(minGroupIdx).setMstLen( new MSTFinder(listOfGroup.get(minGroupIdx).getPointsInGroup()).findMSTlength());
+                listOfGroup.get(minGroupIdx).addPoint(p);
+                listOfGroup.get(minGroupIdx).calculateCurrentCenter();
+                listOfGroup.get(minGroupIdx).setMstLen(new MSTFinder(listOfGroup.get(minGroupIdx).getPointsInGroup()).findMSTlength());
+            }
         }
 
         totalMSTValue=calculateMST();
