@@ -12,26 +12,18 @@ public class GroupTest {
 
     private static final double DELTA = 1e-15;
 
-    private Group group1;
-    private Group group2;
-
-    Point p0 = new Point(0,0);
-    Point p1 = new Point(3,0);
-    Point p2 = new Point(3,3);
-    Point p3 = new Point(0,3);
+    Group group1;
+    Group group2;
+    InstancesMaker im;
 
     @Before
     public void setup(){
-        group1 = new Group(Color.BLACK);
-        group1.addPoint(p0);
-        group1.addPoint(p1);
-        group1.addPoint(p2);
-        group1.addPoint(p3);
+        im = new InstancesMaker();
+        group1 = new Group(im.getGroup1().getGroupColor());
+        group2 = new Group(im.getGroup2().getGroupColor());
 
-        group2 = new Group(Color.RED);
-        group2.addPoint(p0);
-        group2.addPoint(p1);
-        group2.addPoint(p2);
+        group1.setPointsInGroup(im.getPointsList1());
+        group2.setPointsInGroup(im.getPointsList2());
     }
 
     @Test

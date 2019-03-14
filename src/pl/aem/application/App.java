@@ -9,6 +9,7 @@ public class App {
     public static void main(String[] args){
 
         String fileName= "Data/objects.data";
+System.out.println("xxx");
         File resultDir = new File("Results");
         if(!resultDir.exists())  resultDir.mkdir();
 
