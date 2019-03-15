@@ -7,6 +7,10 @@ public class RegretAlgorithm extends Algorithm {
 
     protected double[][] regretArray;
 
+    /**
+     * Class constructor specifying list of points to be grouped by regret algorithm
+     * @param list to be copied to pointsList
+     */
     public RegretAlgorithm( ArrayList<Point> list){
         this.pointsList=new ArrayList<>();
         for(Point p : list){
@@ -19,6 +23,10 @@ public class RegretAlgorithm extends Algorithm {
         this.picture=new DrawPicture(pointsList,computeManager.maxXRange(),computeManager.maxYRange());
     }
 
+    /**
+     * @param array
+     * @return index of max value in array
+     */
     private int getIndexOfMax(double [] array){
         int maxAt = 0;
         for (int i = 0; i < array.length; i++) {
@@ -27,6 +35,10 @@ public class RegretAlgorithm extends Algorithm {
         return maxAt;
     }
 
+    /**
+     * @param array
+     * @return index of min value in array
+     */
     private int getIndexOfMin(double [] array){
         int minAt = 0;
         for (int i = 0; i < array.length; i++) {
@@ -35,6 +47,11 @@ public class RegretAlgorithm extends Algorithm {
         return minAt;
     }
 
+    /**
+     * Main function of algorithm. Split all points into groups using algorithm based on regret
+     * @param numberOfGroups
+     * @param iteration
+     */
     @Override
     public void splitIntoGroups(int numberOfGroups,int iteration) {
         regretArray = new double [pointsList.size()][numberOfGroups];

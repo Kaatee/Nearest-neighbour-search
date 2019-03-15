@@ -2,6 +2,9 @@ package pl.aem.application;
 
 import java.awt.*;
 
+/**
+ * class contains constant values that are used in programm
+ */
 public class Constants {
 
     public static final Color[] COLORS = {

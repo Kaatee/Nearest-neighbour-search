@@ -7,6 +7,10 @@ import java.util.Collections;
 public class CenterOrientedAlgorithm extends Algorithm {
 
 
+    /**
+     * Class constructor specifying list of points to be grouped by center oriented algorithm
+     * @param list
+     */
     public CenterOrientedAlgorithm( ArrayList<Point> list){
         this.pointsList=new ArrayList<>();
         for(Point p : list){
@@ -20,10 +24,15 @@ public class CenterOrientedAlgorithm extends Algorithm {
     }
 
 
+    /**
+     * Main function of algorithm. Split all points into groups using center oriented algorithm.
+     * This algorithm iterate by all points and find such a group that has minimum current and new (after adding this point)
+     * distence to group center (based on average coordinates) and add this point to that group
+     * @param numberOfGroups
+     * @param iteration
+     */
     @Override
     public void splitIntoGroups(int numberOfGroups,int iteration) {
-
-
 
         listOfGroup=groupInit.makeGroupsRandomly(10);
         paintGroups();
@@ -47,7 +56,6 @@ public class CenterOrientedAlgorithm extends Algorithm {
                         minGroupIdx = i;
                     }
                 }
-
                 listOfGroup.get(minGroupIdx).addPoint(p);
                 listOfGroup.get(minGroupIdx).calculateCurrentCenter();
                 listOfGroup.get(minGroupIdx).setMstLen(new MSTFinder(listOfGroup.get(minGroupIdx).getPointsInGroup()).findMSTlength());

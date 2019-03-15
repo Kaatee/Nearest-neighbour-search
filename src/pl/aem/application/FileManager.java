@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class FileManager {
 
+    /**
+     * @param fileName
+     * @return array list of points in file
+     */
     public ArrayList<Point> loadProblemData(String fileName) {
         BufferedReader br;
         ArrayList<Point>  pointsList= new ArrayList<>();

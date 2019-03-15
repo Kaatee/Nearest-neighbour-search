@@ -8,13 +8,18 @@ public class ComputeManager {
     private ArrayList<Point> pointsList;
 
 
+    /**
+     * Class constructor specifying list of points
+     * @param list
+     */
     public ComputeManager(ArrayList<Point> list ){
         this.pointsList=list;
-
     }
 
-
-
+    /**
+     * Calcutates distance array of list of points
+     * @return distance matrix
+     */
     public  double[][] calculateDistanceArray() {
         double[][] distanceArray = new double[pointsList.size()][pointsList.size()];
 
@@ -35,6 +40,9 @@ public class ComputeManager {
 //    }
 
 
+    /**
+     * @return max x coordinate of pointsList
+     */
     public  double maxXRange(){
         ComparatorX x  = new ComparatorX();
         Point minXRangePoint=Collections.max(pointsList,x);
@@ -47,12 +55,18 @@ public class ComputeManager {
 //        return  minXRangePoint.getyCoordinate();
 //    }
 
+    /**
+     * @return max y coordinate of pointsList
+     */
     public  double maxYRange(){
         ComparatorY y  = new ComparatorY();
         Point minXRangePoint=Collections.max(pointsList,y);
         return  minXRangePoint.getyCoordinate();
     }
 
+    /**
+     * compare two points based on it's x coordinates
+     */
     private class ComparatorX implements Comparator<Point>{
         public int compare(Point o1, Point o2) {
             if (o1.getxCoordinate() == o2.getxCoordinate()) {
@@ -66,6 +80,9 @@ public class ComputeManager {
         }
     }
 
+    /**
+     * compare two points based on it's y coordinates
+     */
     private class ComparatorY implements Comparator<Point>{
         public int compare(Point o1, Point o2) {
             if (o1.getyCoordinate() == o2.getyCoordinate()) {

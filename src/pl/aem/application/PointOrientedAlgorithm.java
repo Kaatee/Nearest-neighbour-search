@@ -6,6 +6,10 @@ import java.util.ArrayList;
 public class PointOrientedAlgorithm extends Algorithm {
 
 
+    /**
+     * Class constructor specifying list of points to be grouped by point oriented algorithm
+     * @param list to be copied to pointsList
+     */
     public PointOrientedAlgorithm( ArrayList<Point> list){
         this.pointsList=new ArrayList<>();
         for(Point p : list){
@@ -19,9 +23,15 @@ public class PointOrientedAlgorithm extends Algorithm {
     }
 
 
+    /**
+     * Main function of algorithm. Split all points into groups using point oriented algorithm.
+     * This algorithm iterate by all points and find such a group that has minimum current and new (after adding this point)
+     * mst value and add this point to that group
+     * @param numberOfGroups
+     * @param iteration
+     */
     @Override
     public void splitIntoGroups(int numberOfGroups,int iteration) {
-
 
         listOfGroup=groupInit.makeGroupsRandomly(10);
         paintGroups();
@@ -52,12 +62,9 @@ public class PointOrientedAlgorithm extends Algorithm {
             }
             }
 
-
         totalMSTValue=calculateMST();
         System.out.println("Point: " + totalMSTValue);
         paintGroups();
         picture.draw("Results/ResultPointOriented"+iteration+".png");
     }
-
-
 }

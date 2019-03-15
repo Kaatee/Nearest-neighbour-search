@@ -16,12 +16,18 @@ public abstract class Algorithm {
 
     protected abstract void splitIntoGroups(int numberOfGroups,int iteration);
 
+    /**
+     * paints all points in group on this group color
+     */
     protected void paintGroups(){
         for (Group g : listOfGroup) {
             g.setColorPoints();
         }
     }
 
+    /**
+     * @return current sum of all group's mst value
+     */
     protected double calculateMST(){
         double mstValue=0.0;
         for (Group x : listOfGroup) {
@@ -30,6 +36,9 @@ public abstract class Algorithm {
         return mstValue;
     }
 
+    /**
+     * @return total current mst value
+     */
     public double getTotalMSTvalue() {
         return totalMSTValue;
     }

@@ -14,6 +14,11 @@ public class DrawPicture {
     private int maxX;
     private int maxY;
 
+    /**Class constructor specifying list of points to be drawn and max pictures X and Y value
+     * @param list
+     * @param maxX
+     * @param maxY
+     */
     public DrawPicture (ArrayList<Point> list, double maxX, double maxY ) {//double minY, double maxY){
         pointList = list;
         this.maxX = (int) maxX;
@@ -21,6 +26,13 @@ public class DrawPicture {
     }
 
 
+    /**
+     * resize image to new width = newW and new height = new H
+     * @param img
+     * @param newW
+     * @param newH
+     * @return resized image
+     */
     private BufferedImage resizeImage(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
@@ -33,6 +45,10 @@ public class DrawPicture {
     }
 
 
+    /**
+     * save all points in all groups as an image
+     * @param fileName
+     */
     public void draw(String fileName) {
         final BufferedImage image = new BufferedImage(maxX+5, maxY+5, BufferedImage.TYPE_INT_ARGB);
         final Graphics2D graphics2D = image.createGraphics();

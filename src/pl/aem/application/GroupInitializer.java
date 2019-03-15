@@ -11,6 +11,11 @@ public class GroupInitializer {
     private ArrayList<Point> pointsList;
     private ArrayList<Group> listOfGroup;
 
+    /**
+     * Class constructor specifying distance array and arrayList of all points
+     * @param distanceArray
+     * @param list
+     */
     public GroupInitializer(double[][] distanceArray, ArrayList<Point> list){
         this.distanceArray=distanceArray;
         this.pointsList=list;
@@ -55,6 +60,12 @@ public class GroupInitializer {
 //
 //    }
 
+    /**
+     * Inicjalize groups by one random point.
+     * Points in groups are not repeated
+     * @param numberOfGroups
+     * @return listOfGroup. Each group is initialized by one point
+     */
     public ArrayList<Group>  makeGroupsRandomly(int numberOfGroups){
         ArrayList<Integer> choosen=new ArrayList<>();
 
@@ -74,6 +85,11 @@ public class GroupInitializer {
         return listOfGroup;
     }
 
+    /**
+     * Inicjalize groups by one in 20 point
+     * @param numberOfGroups
+     * @return listOfGroup. Each group is initialized by one point
+     */
     public  ArrayList<Group>  makeGroupsStaticly(int numberOfGroups){
         for(int i=0;i<10;i++) {
             //start vertex
@@ -87,6 +103,12 @@ public class GroupInitializer {
     }
 
 
+    /**
+     * Initialize group by point that has max sum of distances
+     * in distance array of previously added to some group points.
+     * @param numberOfGroups
+     * @return listOfGroup. Each group is initialized by one point
+     */
     public ArrayList<Group> makeGroupsWithMaxDistance(int numberOfGroups){
 
         int idxStartVertex = new Random().nextInt(pointsList.size());
@@ -123,6 +145,10 @@ public class GroupInitializer {
     }
 
 
+    /**
+     * @param sum
+     * @return index of max value in array
+     */
     private int findMaxValueIdx(double[] sum){
         int idx = 0;
         double maxValue = Double.MIN_VALUE;

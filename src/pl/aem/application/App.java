@@ -6,6 +6,10 @@ import java.util.Collections;
 
 public class App {
 
+    /**
+     * main function of programm. Calculate algorithms statistics
+     * @param args
+     */
     public static void main(String[] args){
 
         String fileName= "Data/objects.data";

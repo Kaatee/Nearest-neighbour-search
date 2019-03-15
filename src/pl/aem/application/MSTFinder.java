@@ -8,6 +8,10 @@ public class MSTFinder {
     private boolean[] marked;
     private double length;
 
+    /**
+     * Class constructor specifying list of points in minimum spanning tree
+     * @param pointsList
+     */
     public MSTFinder(ArrayList<Point> pointsList){
         this.pointsList = pointsList;
         ComputeManager cm = new ComputeManager(pointsList);
@@ -16,6 +20,10 @@ public class MSTFinder {
         this.length = 0.0;
     }
 
+    /**
+     * iterate by all points and find the one which has minimum distance tree's points.
+     * Then add this points to tree, mark this points as choosen and set new tree length
+     */
     private void findNearestPointIdx(){
         int minIdxJ =0; //which point has min distance
         int minIdxI = 0; //for what point
@@ -37,6 +45,10 @@ public class MSTFinder {
         marked[minIdxJ] = true;
     }
 
+    /**
+     * invoke findNearestPointIdx() until all points are in tree
+     * @return point's minimum spanning tree length
+     */
     public double findMSTlength() {
         marked[0]=true;
 
@@ -45,17 +57,7 @@ public class MSTFinder {
             i--;
             findNearestPointIdx();
         }
-
         return length;
     }
-
-
-
-    public static boolean isAllTrue(boolean[] array)
-    {
-        for(boolean b : array) if(!b) return false;
-        return true;
-    }
-
 
 }
